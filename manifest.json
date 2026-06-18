@@ -1,0 +1,10 @@
+﻿{
+  "name": "俄语嘴巴训练器",
+  "short_name": "RusMouth",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#111827",
+  "description": "免费俄语字母、发音、跟读、听力和复习训练器。",
+  "lang": "zh-CN"
+}

@@ -1,0 +1,1513 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>俄语嘴巴训练器</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#111827" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel2: #1f2937;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent2: #22c55e;
+      --danger: #fb7185;
+      --warn: #facc15;
+      --border: #334155;
+      --card: #020617;
+      --shadow: rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+    }
+
+    .top {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(31, 41, 55, 0.7);
+      white-space: nowrap;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 12px auto 0;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    nav button {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    nav button.active {
+      background: var(--accent);
+      color: #00111a;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 16px 80px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+
+    .card h2,
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .big-ru {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 8px 0;
+    }
+
+    .latin {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .zh {
+      color: #d1d5db;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 9px 12px;
+      cursor: pointer;
+      background: var(--panel2);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    button:hover {
+      filter: brightness(1.12);
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #00111a;
+    }
+
+    .good {
+      background: var(--accent2);
+      color: #021107;
+    }
+
+    .bad {
+      background: var(--danger);
+      color: #250007;
+    }
+
+    .warn {
+      background: var(--warn);
+      color: #211b00;
+    }
+
+    .ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .mini {
+      font-size: 12px;
+      padding: 6px 9px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      margin-bottom: 0;
+    }
+
+    .letter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+      gap: 10px;
+    }
+
+    .letter {
+      text-align: center;
+      padding: 14px 8px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .letter .char {
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .letter .sound {
+      color: var(--accent);
+      margin-top: 3px;
+    }
+
+    .quiz-option {
+      width: 100%;
+      text-align: left;
+      margin: 5px 0;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.24);
+      border-color: var(--accent2);
+    }
+
+    .quiz-option.wrong {
+      background: rgba(251, 113, 133, 0.24);
+      border-color: var(--danger);
+    }
+
+    .progress-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--panel2);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0%;
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      background: #020617;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      font: inherit;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #0b1220;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      margin: 2px;
+    }
+
+    .danger-zone {
+      border-color: rgba(251, 113, 133, 0.55);
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .big-ru {
+        font-size: 28px;
+      }
+
+      .top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .status-pill {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="top">
+      <div class="brand">
+        <h1>俄语嘴巴训练器</h1>
+        <span>免费 · 本地保存 · 听说优先 · 拒绝订阅制小镣铐</span>
+      </div>
+      <div class="status-pill" id="statusPill">加载中...</div>
+    </div>
+    <nav id="nav"></nav>
+  </header>
+
+  <main id="app"></main>
+
+  <script>
+    const APP_VERSION = "0.1.0";
+
+    const DATA = {
+      letters: [
+        ["А а", "a", "мама", "MA-ma", "妈妈"],
+        ["Б б", "b", "банк", "bank", "银行"],
+        ["В в", "v", "вода", "va-DA", "水"],
+        ["Г г", "g", "город", "GO-rad", "城市"],
+        ["Д д", "d", "дом", "dom", "家"],
+        ["Е е", "ye / e", "нет", "nyet", "不"],
+        ["Ё ё", "yo", "ёлка", "YOL-ka", "圣诞树"],
+        ["Ж ж", "zh", "журнал", "zhur-NAL", "杂志"],
+        ["З з", "z", "зуб", "zub", "牙齿"],
+        ["И и", "i", "имя", "I-mya", "名字"],
+        ["Й й", "y", "мой", "moy", "我的"],
+        ["К к", "k", "кофе", "KO-fye", "咖啡"],
+        ["Л л", "l", "лампа", "LAM-pa", "灯"],
+        ["М м", "m", "мама", "MA-ma", "妈妈"],
+        ["Н н", "n", "нет", "nyet", "不"],
+        ["О о", "o / a", "он", "on", "他"],
+        ["П п", "p", "папа", "PA-pa", "爸爸"],
+        ["Р р", "r", "рука", "ru-KA", "手"],
+        ["С с", "s", "сок", "sok", "果汁"],
+        ["Т т", "t", "ты", "ty", "你"],
+        ["У у", "u", "утро", "U-tra", "早晨"],
+        ["Ф ф", "f", "фото", "FO-to", "照片"],
+        ["Х х", "kh / x", "хочу", "kha-CHU", "想要"],
+        ["Ц ц", "ts", "центр", "TSEN-tr", "中心"],
+        ["Ч ч", "ch", "чай", "chay", "茶"],
+        ["Ш ш", "sh", "школа", "SHKO-la", "学校"],
+        ["Щ щ", "shch", "щи", "shchi", "白菜汤"],
+        ["Ъ ъ", "hard sign", "объект", "ab-YEKT", "物体"],
+        ["Ы ы", "y", "ты", "ty", "你"],
+        ["Ь ь", "soft sign", "день", "dyen", "天"],
+        ["Э э", "e", "это", "E-ta", "这个"],
+        ["Ю ю", "yu", "юг", "yuk", "南方"],
+        ["Я я", "ya", "я", "ya", "我"]
+      ].map((x, i) => ({
+        id: "letter_" + String(i + 1).padStart(2, "0"),
+        letter: x[0],
+        sound: x[1],
+        exampleRu: x[2],
+        exampleLatin: x[3],
+        exampleZh: x[4]
+      })),
+
+      sounds: [
+        {
+          id: "sound_x",
+          title: "Х х",
+          subtitle: "喉部摩擦音",
+          examples: ["хочу", "хорошо", "хлеб"],
+          tips: ["不是中文普通 h。", "像喉咙后部轻轻摩擦出来的气音。", "练的时候不要太用力，别把自己练成坏掉的水壶。"]
+        },
+        {
+          id: "sound_y",
+          title: "Ы ы",
+          subtitle: "中文里没有的硬元音",
+          examples: ["ты", "мы", "сыр"],
+          tips: ["嘴巴不要咧太开。", "舌头靠后，声音短而硬。", "它不是 yi，也不是 wu，是俄语给初学者准备的小型地狱门票。"]
+        },
+        {
+          id: "sound_r",
+          title: "Р р",
+          subtitle: "颤音 r",
+          examples: ["рука", "Россия", "говорю"],
+          tips: ["舌尖靠近上齿龈。", "先练短颤，不要一上来追求戏剧化摩托车声。", "说不出颤音也能先交流，别把自己卡死。"]
+        },
+        {
+          id: "sound_zh",
+          title: "Ж ж",
+          subtitle: "zh 音",
+          examples: ["журнал", "уже", "жизнь"],
+          tips: ["类似英文 pleasure 里的 s 音。", "比中文“日”更硬。", "声音要浊，声带参与。"]
+        },
+        {
+          id: "sound_sh",
+          title: "Ш ш / Щ щ",
+          subtitle: "硬 sh 与软 shch",
+          examples: ["школа", "хорошо", "щи"],
+          tips: ["ш 更硬更厚。", "щ 更软更长。", "先区分大概，不要为了一个 щ 原地崩溃。"]
+        },
+        {
+          id: "sound_soft",
+          title: "Ь",
+          subtitle: "软音符号",
+          examples: ["день", "мать", "говорить"],
+          tips: ["它自己不发音。", "它让前面的辅音变软。", "可以理解为辅音后面带一点轻微的 y 感。"]
+        },
+        {
+          id: "sound_stress",
+          title: "重音",
+          subtitle: "俄语重音会改变节奏",
+          examples: ["хочу", "кофе", "говорю"],
+          tips: ["拉丁标注里大写部分是重音。", "хочу 是 kha-CHU，不是 KHA-chu。", "重音错了，对方也许懂，但你的俄语会穿错鞋。"]
+        }
+      ],
+
+      phrases: [
+        ["p001", "Привет.", "pri-VYET", "你好。", ["greeting"], ["重音在第二拍。"]],
+        ["p002", "Здравствуйте.", "ZDRAST-vuy-tye", "您好。", ["greeting"], ["开头 zdr 连在一起，不要拆太碎。"]],
+        ["p003", "Меня зовут Анна.", "mi-NYA za-VUT AN-na", "我叫安娜。", ["intro"], ["меня 重音在 ня，зовут 重音在 vut。"]],
+        ["p004", "Как вас зовут?", "kak vas za-VUT", "您叫什么名字？", ["intro"], ["зовут 重音在最后。"]],
+        ["p005", "Очень приятно.", "O-chin pri-YAT-na", "很高兴认识你。", ["intro"], ["приятно 重音在 yat。"]],
+        ["p006", "Я из Китая.", "ya is ki-TA-ya", "我来自中国。", ["intro"], ["из 后面连读自然一点。"]],
+        ["p007", "Я изучаю русский язык.", "ya i-zu-CHA-yu RUS-ski ya-ZYK", "我在学俄语。", ["learning"], ["изучаю 重音在 ча，язык 重音在 зык。"]],
+        ["p008", "Я немного говорю по-русски.", "ya ni-MNO-ga ga-va-RYU pa-RUS-ski", "我会说一点俄语。", ["learning"], ["говорю 重音在 рю。"]],
+        ["p009", "Я не понимаю.", "ya nye pa-ni-MA-yu", "我不明白。", ["survival"], ["понимаю 重音在 ма。"]],
+        ["p010", "Повторите, пожалуйста.", "paf-ta-RI-tye pa-ZHA-lus-ta", "请重复一下。", ["survival"], ["повторите 重音在 ри，пожалуйста 重音在 жа。"]],
+        ["p011", "Говорите медленнее, пожалуйста.", "ga-va-RI-tye med-LYE-nye-ye pa-ZHA-lus-ta", "请说慢一点。", ["survival"], ["медленнее 里面的 lye 要软。"]],
+        ["p012", "Как это сказать по-русски?", "kak E-ta ska-ZAT pa-RUS-ski", "这个用俄语怎么说？", ["learning"], ["сказать 重音在 zat。"]],
+        ["p013", "Да.", "da", "是。", ["basic"], ["短促，不要拖成中文语气词。"]],
+        ["p014", "Нет.", "nyet", "不。", ["basic"], ["е 在这里接近 ye。"]],
+        ["p015", "Спасибо.", "spa-SI-ba", "谢谢。", ["basic"], ["重音在 си。"]],
+        ["p016", "Пожалуйста.", "pa-ZHA-lus-ta", "请 / 不客气。", ["basic"], ["ж 是浊音 zh。"]],
+        ["p017", "Извините.", "iz-vi-NI-tye", "不好意思。", ["basic"], ["重音在 ни。"]],
+        ["p018", "Я хочу кофе.", "ya kha-CHU KO-fye", "我想要咖啡。", ["want", "food"], ["хочу 重音在 чу，кофе 重音在 ко。"]],
+        ["p019", "Я хочу воду.", "ya kha-CHU VO-du", "我想要水。", ["want", "food"], ["воду 是 вода 的宾格形式，先会说就行。"]],
+        ["p020", "Я хочу чай.", "ya kha-CHU chay", "我想要茶。", ["want", "food"], ["чай 短促，不要变成中文“拆”。"]],
+        ["p021", "Я хочу есть.", "ya kha-CHU yest", "我想吃东西。", ["want", "food"], ["есть 这里是吃。"]],
+        ["p022", "Я хочу спать.", "ya kha-CHU spat", "我想睡觉。", ["want"], ["спать 开头 sp 连读。"]],
+        ["p023", "Я хочу домой.", "ya kha-CHU da-MOY", "我想回家。", ["want"], ["домой 重音在 мой。"]],
+        ["p024", "Я дома.", "ya DO-ma", "我在家。", ["place"], ["дома 重音在 до。"]],
+        ["p025", "Где туалет?", "gdye tu-a-LYET", "厕所在哪里？", ["travel"], ["туалет 重音在 лет。"]],
+        ["p026", "Где метро?", "gdye mi-TRO", "地铁在哪里？", ["travel"], ["метро 重音在 тро。"]],
+        ["p027", "Сколько это стоит?", "SKOL-ka E-ta STO-it", "这个多少钱？", ["shopping"], ["сколько 和 стоит 重音都在前。"]],
+        ["p028", "Это дорого.", "E-ta DO-ra-ga", "这个贵。", ["shopping"], ["дорого 重音在 до。"]],
+        ["p029", "Это дешево.", "E-ta DYE-she-va", "这个便宜。", ["shopping"], ["дёшево 常写 дешево，发音近 dye-she-va。"]],
+        ["p030", "Можно?", "MOZH-na", "可以吗？", ["basic"], ["ж 浊音。"]],
+        ["p031", "Нельзя.", "nil-ZYA", "不可以。", ["basic"], ["я 在这里是 zya。"]],
+        ["p032", "Мне нужно такси.", "mnye NUZH-na tak-SI", "我需要出租车。", ["travel"], ["мне 开头 mn 连读。"]],
+        ["p033", "Помогите, пожалуйста.", "pa-ma-GI-tye pa-ZHA-lus-ta", "请帮帮我。", ["survival"], ["помогите 重音在 ги。"]],
+        ["p034", "У меня есть вопрос.", "u mi-NYA yest va-PROS", "我有一个问题。", ["grammar"], ["у меня есть 是“我有”。"]],
+        ["p035", "Я устал.", "ya us-TAL", "我累了。", ["feeling"], ["男性说 устал。"]],
+        ["p036", "Я устала.", "ya us-TA-la", "我累了。", ["feeling"], ["女性说 устала。"]],
+        ["p037", "Сегодня я занят.", "si-VOD-nya ya ZA-nyat", "今天我很忙。", ["daily"], ["сегодня 重音在 вод。"]],
+        ["p038", "До свидания.", "da svi-DA-ni-ya", "再见。", ["greeting"], ["свидания 重音在 да。"]],
+        ["p039", "Хорошо.", "kha-ra-SHO", "好。", ["basic"], ["х 是喉部摩擦音。"]],
+        ["p040", "Я готов.", "ya ga-TOV", "我准备好了。", ["daily"], ["готов 重音在 тов。"]]
+      ].map(x => ({
+        id: x[0],
+        ru: x[1],
+        latin: x[2],
+        zh: x[3],
+        tags: x[4],
+        focus: x[5]
+      })),
+
+      grammar: [
+        {
+          id: "g001",
+          title: "Я хочу ...",
+          zh: "我想要 / 我想……",
+          note: "先把 Я хочу 练熟，再替换后面的东西。别急着问宾格，语法章鱼会晚点登场。",
+          examples: [
+            ["Я хочу кофе.", "我想要咖啡。"],
+            ["Я хочу воду.", "我想要水。"],
+            ["Я хочу спать.", "我想睡觉。"],
+            ["Я хочу домой.", "我想回家。"]
+          ]
+        },
+        {
+          id: "g002",
+          title: "Я ...",
+          zh: "我是 / 我在……",
+          note: "俄语现在时经常不说“是”。你会觉得少了什么，俄语会假装没听见。",
+          examples: [
+            ["Я дома.", "我在家。"],
+            ["Я студент.", "我是学生。"],
+            ["Я из Китая.", "我来自中国。"]
+          ]
+        },
+        {
+          id: "g003",
+          title: "У меня есть ...",
+          zh: "我有……",
+          note: "俄语的“我有”字面像“在我这里有”。先别抗议，它已经这样很多年了。",
+          examples: [
+            ["У меня есть телефон.", "我有手机。"],
+            ["У меня есть вопрос.", "我有一个问题。"],
+            ["У меня есть время.", "我有时间。"]
+          ]
+        },
+        {
+          id: "g004",
+          title: "Где ...?",
+          zh: "……在哪里？",
+          note: "旅行救命模板。先学会问路，再考虑俄罗斯文学。",
+          examples: [
+            ["Где туалет?", "厕所在哪里？"],
+            ["Где метро?", "地铁在哪里？"],
+            ["Где кафе?", "咖啡馆在哪里？"]
+          ]
+        }
+      ],
+
+      scenarios: [
+        {
+          id: "s001",
+          title: "咖啡店",
+          lines: [
+            ["Здравствуйте.", "您好。"],
+            ["Я хочу кофе.", "我想要咖啡。"],
+            ["Большой или маленький?", "大的还是小的？"],
+            ["Маленький, пожалуйста.", "小的，谢谢。"],
+            ["Сколько это стоит?", "这个多少钱？"],
+            ["Спасибо.", "谢谢。"]
+          ]
+        },
+        {
+          id: "s002",
+          title: "问路",
+          lines: [
+            ["Извините.", "不好意思。"],
+            ["Где метро?", "地铁在哪里？"],
+            ["Идите прямо.", "一直往前走。"],
+            ["Спасибо.", "谢谢。"],
+            ["Пожалуйста.", "不客气。"]
+          ]
+        },
+        {
+          id: "s003",
+          title: "自我介绍",
+          lines: [
+            ["Привет.", "你好。"],
+            ["Меня зовут Анна.", "我叫安娜。"],
+            ["Я из Китая.", "我来自中国。"],
+            ["Я изучаю русский язык.", "我在学俄语。"],
+            ["Очень приятно.", "很高兴认识你。"]
+          ]
+        },
+        {
+          id: "s004",
+          title: "听不懂时",
+          lines: [
+            ["Я не понимаю.", "我不明白。"],
+            ["Повторите, пожалуйста.", "请重复一下。"],
+            ["Говорите медленнее, пожалуйста.", "请说慢一点。"],
+            ["Как это сказать по-русски?", "这个用俄语怎么说？"]
+          ]
+        }
+      ]
+    };
+
+    const VIEWS = [
+      ["home", "首页"],
+      ["letters", "字母"],
+      ["sounds", "发音"],
+      ["phrases", "跟读"],
+      ["listening", "听力"],
+      ["grammar", "语法句型"],
+      ["scenarios", "场景"],
+      ["review", "复习"],
+      ["mistakes", "错题"],
+      ["progress", "进度"],
+      ["settings", "设置"]
+    ];
+
+    const $ = selector => document.querySelector(selector);
+
+    let view = "home";
+    let state = loadState();
+    let listenQuiz = null;
+    let letterQuiz = null;
+    let mediaRecorder = null;
+    let recordChunks = [];
+    let activeRecordId = null;
+
+    function defaultState() {
+      return {
+        version: APP_VERSION,
+        createdAt: Date.now(),
+        lastOpenDate: "",
+        streak: 0,
+        reviews: {},
+        mistakes: [],
+        stats: {
+          played: 0,
+          recorded: 0,
+          answered: 0,
+          correct: 0,
+          completed: 0
+        },
+        settings: {
+          rate: 0.9,
+          voiceURI: ""
+        }
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem("rusmouth_state");
+        if (!raw) return defaultState();
+        return { ...defaultState(), ...JSON.parse(raw) };
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem("rusmouth_state", JSON.stringify(state));
+      updateStatus();
+    }
+
+    function todayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function initDaily() {
+      const today = todayKey();
+      if (state.lastOpenDate !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        state.streak = state.lastOpenDate === yesterday ? state.streak + 1 : 1;
+        state.lastOpenDate = today;
+        saveState();
+      }
+    }
+
+    function esc(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function enc(str) {
+      return encodeURIComponent(str);
+    }
+
+    function dec(str) {
+      return decodeURIComponent(str);
+    }
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function findPhrase(id) {
+      return DATA.phrases.find(p => p.id === id);
+    }
+
+    function setView(next) {
+      view = next;
+      render();
+    }
+
+    function updateStatus() {
+      const mastered = Object.values(state.reviews).filter(r => r.level >= 3).length;
+      $("#statusPill").textContent = `连续 ${state.streak || 0} 天 · 已掌握 ${mastered} 项 · 错题 ${state.mistakes.length} 条`;
+    }
+
+    function renderNav() {
+      $("#nav").innerHTML = VIEWS.map(([id, label]) => `
+        <button class="${view === id ? "active" : ""}" data-action="view" data-view="${id}">
+          ${label}
+        </button>
+      `).join("");
+    }
+
+    function render() {
+      renderNav();
+      updateStatus();
+
+      const app = $("#app");
+
+      if (view === "home") app.innerHTML = renderHome();
+      if (view === "letters") app.innerHTML = renderLetters();
+      if (view === "sounds") app.innerHTML = renderSounds();
+      if (view === "phrases") app.innerHTML = renderPhrases();
+      if (view === "listening") app.innerHTML = renderListening();
+      if (view === "grammar") app.innerHTML = renderGrammar();
+      if (view === "scenarios") app.innerHTML = renderScenarios();
+      if (view === "review") app.innerHTML = renderReview();
+      if (view === "mistakes") app.innerHTML = renderMistakes();
+      if (view === "progress") app.innerHTML = renderProgress();
+      if (view === "settings") {
+        app.innerHTML = renderSettings();
+        setTimeout(populateVoices, 100);
+      }
+    }
+
+    function renderHome() {
+      const total = DATA.phrases.length + DATA.letters.length + DATA.sounds.length;
+      const done = Object.keys(state.reviews).length;
+      const pct = Math.min(100, Math.round(done / total * 100));
+
+      return `
+        <div class="section-title">
+          <div>
+            <h2>今日训练</h2>
+            <p class="muted">听标准音 → 跟读 → 录自己 → 对比 → 小测验 → 复习错的。是的，嘴巴终于要上班了。</p>
+          </div>
+          <button class="primary" data-action="view" data-view="phrases">开始跟读</button>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <h3>推荐流程</h3>
+            <p>1. 字母 5 分钟</p>
+            <p>2. 发音 5 分钟</p>
+            <p>3. 句子跟读 10 分钟</p>
+            <p>4. 听力测试 5 分钟</p>
+            <p>5. 复习错题 5 分钟</p>
+            <div class="row">
+              <button data-action="view" data-view="letters">练字母</button>
+              <button data-action="view" data-view="sounds">练发音</button>
+              <button data-action="view" data-view="listening">做听力</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <h3>学习进度</h3>
+            <p class="muted">已接触 ${done} / ${total} 项</p>
+            <div class="progress-bar"><span style="width:${pct}%"></span></div>
+            <p>播放：${state.stats.played} 次</p>
+            <p>录音：${state.stats.recorded} 次</p>
+            <p>答题：${state.stats.correct} / ${state.stats.answered}</p>
+          </section>
+
+          <section class="card">
+            <h3>今日目标</h3>
+            <p>完成 20 张卡片。不是 200 张。我们做软件，不做精神刑具。</p>
+            <button class="good" data-action="view" data-view="review">复习到期内容</button>
+          </section>
+        </div>
+
+        <p class="footer-note">
+          提示：朗读用的是浏览器/系统自带俄语语音。录音功能通常需要 localhost 或 HTTPS。不要双击文件然后怪电脑，它只是电脑，不是你的心理医生。
+        </p>
+      `;
+    }
+
+    function renderLetters() {
+      if (!letterQuiz) makeLetterQuiz();
+
+      return `
+        <div class="section-title">
+          <div>
+            <h2>俄语字母训练</h2>
+            <p class="muted">先认字母，再谈语法。不然就是盯着斯拉夫符号森林发呆。</p>
+          </div>
+          <button class="primary" data-action="new-letter-quiz">换一题</button>
+        </div>
+
+        <section class="card">
+          <h3>字母小测验</h3>
+          <p class="muted">这个字母怎么读？</p>
+          <div class="big-ru">${esc(letterQuiz.answer.letter)}</div>
+          ${letterQuiz.options.map(opt => `
+            <button class="quiz-option ${letterQuiz.chosen === opt.id ? (opt.id === letterQuiz.answer.id ? "correct" : "wrong") : ""}"
+              data-action="answer-letter" data-id="${opt.id}">
+              ${esc(opt.sound)}
+            </button>
+          `).join("")}
+          <p class="muted">${letterQuiz.feedback || ""}</p>
+        </section>
+
+        <h3>完整字母表</h3>
+        <div class="letter-grid">
+          ${DATA.letters.map(l => `
+            <div class="letter">
+              <div class="char">${esc(l.letter)}</div>
+              <div class="sound">${esc(l.sound)}</div>
+              <div class="muted">${esc(l.exampleRu)} · ${esc(l.exampleZh)}</div>
+              <div class="row" style="justify-content:center;margin-top:8px">
+                <button class="mini" data-action="speak" data-text="${enc(l.letter.split(" ")[0])}" data-rate="0.75">字母</button>
+                <button class="mini" data-action="speak" data-text="${enc(l.exampleRu)}" data-rate="0.75">例词</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function makeLetterQuiz() {
+      const answer = pick(DATA.letters);
+      const wrong = shuffle(DATA.letters.filter(l => l.id !== answer.id)).slice(0, 3);
+      letterQuiz = {
+        answer,
+        options: shuffle([answer, ...wrong]),
+        chosen: null,
+        feedback: ""
+      };
+    }
+
+    function renderSounds() {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>标准发音训练</h2>
+            <p class="muted">专治 х、ы、р、ж、ш、щ 这些专门绊倒中文嘴巴的音。</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          ${DATA.sounds.map(s => `
+            <section class="card">
+              <h3>${esc(s.title)}</h3>
+              <p class="latin">${esc(s.subtitle)}</p>
+              <p>${s.examples.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</p>
+              <ul>
+                ${s.tips.map(t => `<li>${esc(t)}</li>`).join("")}
+              </ul>
+              <div class="row">
+                ${s.examples.map(x => `
+                  <button data-action="speak" data-text="${enc(x)}" data-rate="0.75">${esc(x)}</button>
+                `).join("")}
+              </div>
+            </section>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderPhrases(list = DATA.phrases) {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>句子跟读</h2>
+            <p class="muted">整句入口。单词不要孤零零背，没人靠词典碎片活着，除非你是坏掉的菜单。</p>
+          </div>
+        </div>
+        <div class="grid">
+          ${list.map(renderPhraseCard).join("")}
+        </div>
+      `;
+    }
+
+    function renderPhraseCard(p) {
+      const r = state.reviews[p.id] || {};
+      const status = r.level ? `等级 ${r.level} · 对 ${r.correct || 0} · 错 ${r.wrong || 0}` : "新卡";
+
+      return `
+        <article class="card">
+          <div class="big-ru">${esc(p.ru)}</div>
+          <div class="latin">${esc(p.latin)}</div>
+          <div class="zh">${esc(p.zh)}</div>
+          <p>${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</p>
+          <p class="muted">${esc(p.focus.join(" "))}</p>
+          <p class="muted">${status}</p>
+
+          <div class="row">
+            <button class="primary" data-action="speak" data-text="${enc(p.ru)}" data-rate="${state.settings.rate}">播放</button>
+            <button data-action="speak" data-text="${enc(p.ru)}" data-rate="0.62">慢速</button>
+            <button class="warn" data-action="record" data-id="${p.id}">录音</button>
+            <button class="good" data-action="mark" data-id="${p.id}" data-rating="good">我会了</button>
+            <button class="bad" data-action="mark" data-id="${p.id}" data-rating="bad">我不会</button>
+          </div>
+
+          <div id="recording-${p.id}"></div>
+        </article>
+      `;
+    }
+
+    function renderListening() {
+      if (!listenQuiz) makeListenQuiz();
+
+      return `
+        <div class="section-title">
+          <div>
+            <h2>听力选择</h2>
+            <p class="muted">先听，不许偷看答案。耳朵不能一直躺平。</p>
+          </div>
+          <button class="primary" data-action="new-listen-quiz">下一题</button>
+        </div>
+
+        <section class="card">
+          <h3>听这句话，选择中文意思</h3>
+          <button class="primary" data-action="speak" data-text="${enc(listenQuiz.answer.ru)}" data-rate="${state.settings.rate}">
+            播放俄语
+          </button>
+          <button data-action="speak" data-text="${enc(listenQuiz.answer.ru)}" data-rate="0.62">
+            慢速播放
+          </button>
+
+          <div style="margin-top:14px">
+            ${listenQuiz.options.map(opt => `
+              <button class="quiz-option ${listenQuiz.chosen === opt.id ? (opt.id === listenQuiz.answer.id ? "correct" : "wrong") : ""}"
+                data-action="answer-listening" data-id="${opt.id}">
+                ${esc(opt.zh)}
+              </button>
+            `).join("")}
+          </div>
+
+          <p class="muted">${listenQuiz.feedback || ""}</p>
+          ${listenQuiz.chosen ? `
+            <div class="big-ru">${esc(listenQuiz.answer.ru)}</div>
+            <div class="latin">${esc(listenQuiz.answer.latin)}</div>
+          ` : ""}
+        </section>
+      `;
+    }
+
+    function makeListenQuiz() {
+      const answer = pick(DATA.phrases);
+      const wrong = shuffle(DATA.phrases.filter(p => p.id !== answer.id)).slice(0, 3);
+      listenQuiz = {
+        answer,
+        options: shuffle([answer, ...wrong]),
+        chosen: null,
+        feedback: ""
+      };
+    }
+
+    function renderGrammar() {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>语法句型</h2>
+            <p class="muted">不从六格表开始。我们还没那么恨自己。</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          ${DATA.grammar.map(g => `
+            <section class="card">
+              <h3>${esc(g.title)}</h3>
+              <p class="latin">${esc(g.zh)}</p>
+              <p class="muted">${esc(g.note)}</p>
+              ${g.examples.map(([ru, zh]) => `
+                <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:10px">
+                  <div class="big-ru" style="font-size:24px">${esc(ru)}</div>
+                  <div class="zh">${esc(zh)}</div>
+                  <button class="mini primary" data-action="speak" data-text="${enc(ru)}" data-rate="${state.settings.rate}">播放</button>
+                </div>
+              `).join("")}
+            </section>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderScenarios() {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>场景课程</h2>
+            <p class="muted">现实生活不是按语法章节发生的，真遗憾，教材作者可能不知道。</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          ${DATA.scenarios.map(s => `
+            <section class="card">
+              <h3>${esc(s.title)}</h3>
+              ${s.lines.map(([ru, zh]) => `
+                <div style="border-top:1px solid var(--border);padding:10px 0">
+                  <div class="big-ru" style="font-size:22px">${esc(ru)}</div>
+                  <div class="zh">${esc(zh)}</div>
+                  <button class="mini primary" data-action="speak" data-text="${enc(ru)}" data-rate="${state.settings.rate}">播放</button>
+                </div>
+              `).join("")}
+              <button class="good" data-action="play-scenario" data-id="${s.id}">播放整个场景</button>
+            </section>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function duePhraseList() {
+      const now = Date.now();
+      const due = DATA.phrases.filter(p => {
+        const r = state.reviews[p.id];
+        return r && r.nextAt <= now;
+      });
+
+      const wrongIds = [...new Set(state.mistakes.map(m => m.id))];
+      const wrong = wrongIds.map(findPhrase).filter(Boolean);
+
+      const fresh = DATA.phrases.filter(p => !state.reviews[p.id]).slice(0, 8);
+
+      return [...new Map([...due, ...wrong, ...fresh].map(p => [p.id, p])).values()].slice(0, 20);
+    }
+
+    function renderReview() {
+      const list = duePhraseList();
+
+      return `
+        <div class="section-title">
+          <div>
+            <h2>复习</h2>
+            <p class="muted">不会的东西会回来找你。像债务，但更有教育意义。</p>
+          </div>
+        </div>
+
+        ${list.length ? `
+          <div class="grid">${list.map(renderPhraseCard).join("")}</div>
+        ` : `
+          <section class="card">
+            <h3>今天没有到期复习</h3>
+            <p class="muted">你可以去跟读新句子。不要太高兴，俄语还在。</p>
+            <button class="primary" data-action="view" data-view="phrases">学习新句子</button>
+          </section>
+        `}
+      `;
+    }
+
+    function renderMistakes() {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>错题本</h2>
+            <p class="muted">这里不是羞辱墙，是你的语言修理厂。虽然看起来确实有点像羞辱墙。</p>
+          </div>
+          <button class="bad" data-action="clear-mistakes">清空错题</button>
+        </div>
+
+        <div class="grid">
+          ${state.mistakes.length ? state.mistakes.slice().reverse().map(m => {
+            const p = findPhrase(m.id);
+            return `
+              <section class="card">
+                <h3>${esc(m.type)}</h3>
+                <p class="muted">${new Date(m.time).toLocaleString()}</p>
+                ${p ? `
+                  <div class="big-ru" style="font-size:24px">${esc(p.ru)}</div>
+                  <div class="latin">${esc(p.latin)}</div>
+                  <div class="zh">${esc(p.zh)}</div>
+                  <button class="primary" data-action="speak" data-text="${enc(p.ru)}" data-rate="${state.settings.rate}">播放</button>
+                ` : `
+                  <p>${esc(m.reason || "未知错误")}</p>
+                `}
+              </section>
+            `;
+          }).join("") : `
+            <section class="card">
+              <h3>没有错题</h3>
+              <p class="muted">这很可疑。要么你很强，要么你还没开始。</p>
+            </section>
+          `}
+        </div>
+      `;
+    }
+
+    function renderProgress() {
+      const accuracy = state.stats.answered
+        ? Math.round(state.stats.correct / state.stats.answered * 100)
+        : 0;
+
+      const mastered = Object.values(state.reviews).filter(r => r.level >= 3).length;
+      const touched = Object.keys(state.reviews).length;
+
+      return `
+        <div class="section-title">
+          <div>
+            <h2>进度统计</h2>
+            <p class="muted">数据不会让你变流利，但会暴露你有没有偷懒。科技真阴险。</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <h3>总览</h3>
+            <p>连续学习：${state.streak} 天</p>
+            <p>已接触：${touched} 项</p>
+            <p>已掌握：${mastered} 项</p>
+            <p>播放次数：${state.stats.played}</p>
+            <p>录音次数：${state.stats.recorded}</p>
+            <p>听力正确率：${accuracy}%</p>
+          </section>
+
+          <section class="card">
+            <h3>导出进度</h3>
+            <p class="muted">换设备前可以复制保存。简陋，但免费。你看，世界还没完全坏掉。</p>
+            <button class="primary" data-action="export-progress">生成导出数据</button>
+            <textarea id="exportBox" rows="8" placeholder="导出数据会出现在这里"></textarea>
+          </section>
+
+          <section class="card">
+            <h3>导入进度</h3>
+            <textarea id="importBox" rows="8" placeholder="把之前导出的 JSON 粘贴到这里"></textarea>
+            <button class="good" data-action="import-progress">导入</button>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderSettings() {
+      return `
+        <div class="section-title">
+          <div>
+            <h2>设置</h2>
+            <p class="muted">俄语语音取决于你的浏览器和系统。软件免费，声音可能带一点机器灵魂。</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <h3>俄语语音</h3>
+            <label>选择语音</label>
+            <select id="voiceSelect"></select>
+            <p class="muted">优先选择 ru-RU。没有的话，系统可能没安装俄语语音。</p>
+            <button class="primary" data-action="test-voice">测试语音</button>
+          </section>
+
+          <section class="card">
+            <h3>朗读速度</h3>
+            <input type="range" min="0.5" max="1.2" step="0.05" value="${state.settings.rate}" id="rateInput" />
+            <p>当前速度：<span id="rateValue">${state.settings.rate}</span></p>
+            <button class="good" data-action="save-settings">保存设置</button>
+          </section>
+
+          <section class="card danger-zone">
+            <h3>重置数据</h3>
+            <p class="muted">会清空进度、错题、复习记录。按钮很小，后果很大，人类最喜欢这种设计。</p>
+            <button class="bad" data-action="reset-state">清空所有学习数据</button>
+          </section>
+        </div>
+      `;
+    }
+
+    function getVoices() {
+      return window.speechSynthesis ? speechSynthesis.getVoices() : [];
+    }
+
+    function populateVoices() {
+      const select = $("#voiceSelect");
+      if (!select) return;
+
+      const voices = getVoices();
+      const ruVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith("ru"));
+      const useful = ruVoices.length ? ruVoices : voices;
+
+      select.innerHTML = useful.map(v => `
+        <option value="${esc(v.voiceURI)}" ${state.settings.voiceURI === v.voiceURI ? "selected" : ""}>
+          ${esc(v.name)} — ${esc(v.lang)}
+        </option>
+      `).join("");
+
+      select.onchange = () => {
+        state.settings.voiceURI = select.value;
+        saveState();
+      };
+    }
+
+    async function speak(text, rate = state.settings.rate) {
+      if (!window.speechSynthesis) {
+        alert("你的浏览器不支持语音朗读。换 Chrome / Edge / Safari 试试。");
+        return;
+      }
+
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ru-RU";
+      utterance.rate = Number(rate) || state.settings.rate;
+      utterance.pitch = 1;
+
+      const voices = getVoices();
+      const selected = voices.find(v => v.voiceURI === state.settings.voiceURI);
+      const ruVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("ru"));
+
+      utterance.voice = selected || ruVoice || null;
+
+      state.stats.played++;
+      saveState();
+
+      speechSynthesis.speak(utterance);
+    }
+
+    async function startRecording(id) {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("浏览器不支持录音。请用 Chrome / Edge / Safari，并通过 localhost 或 HTTPS 打开。");
+        return;
+      }
+
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        stopRecording();
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recordChunks = [];
+        activeRecordId = id;
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = e => {
+          if (e.data.size > 0) recordChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordChunks, { type: "audio/webm" });
+          const url = URL.createObjectURL(blob);
+          const box = document.getElementById("recording-" + activeRecordId);
+          if (box) {
+            box.innerHTML = `
+              <p class="muted">你的录音：</p>
+              <audio controls src="${url}"></audio>
+            `;
+          }
+          stream.getTracks().forEach(t => t.stop());
+          state.stats.recorded++;
+          saveState();
+        };
+
+        mediaRecorder.start();
+        const box = document.getElementById("recording-" + id);
+        if (box) {
+          box.innerHTML = `
+            <p class="muted">正在录音……再点一次“录音”停止。</p>
+          `;
+        }
+      } catch (err) {
+        alert("录音失败。可能是你拒绝了麦克风权限，或者不是 localhost / HTTPS。");
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+      }
+    }
+
+    function markCard(id, rating) {
+      const old = state.reviews[id] || {
+        id,
+        level: 0,
+        correct: 0,
+        wrong: 0,
+        nextAt: Date.now()
+      };
+
+      if (rating === "good") {
+        old.correct++;
+        old.level = Math.min(5, old.level + 1);
+        const days = [1, 3, 7, 14, 30][Math.max(0, old.level - 1)];
+        old.nextAt = Date.now() + days * 86400000;
+      } else {
+        old.wrong++;
+        old.level = 0;
+        old.nextAt = Date.now() + 10 * 60000;
+        addMistake(id, "跟读/复习", "用户标记不会");
+      }
+
+      state.reviews[id] = old;
+      state.stats.completed++;
+      saveState();
+      render();
+    }
+
+    function addMistake(id, type, reason) {
+      state.mistakes.push({
+        id,
+        type,
+        reason,
+        time: Date.now()
+      });
+
+      if (state.mistakes.length > 200) {
+        state.mistakes = state.mistakes.slice(-200);
+      }
+    }
+
+    function answerListening(id) {
+      if (!listenQuiz || listenQuiz.chosen) return;
+
+      listenQuiz.chosen = id;
+      state.stats.answered++;
+
+      if (id === listenQuiz.answer.id) {
+        state.stats.correct++;
+        listenQuiz.feedback = "对了。耳朵今天终于没有装死。";
+        markSoft(listenQuiz.answer.id, true);
+      } else {
+        listenQuiz.feedback = `错了。正确答案是：${listenQuiz.answer.zh}`;
+        addMistake(listenQuiz.answer.id, "听力", "听力选择错误");
+        markSoft(listenQuiz.answer.id, false);
+      }
+
+      saveState();
+      render();
+    }
+
+    function markSoft(id, ok) {
+      const old = state.reviews[id] || {
+        id,
+        level: 0,
+        correct: 0,
+        wrong: 0,
+        nextAt: Date.now()
+      };
+
+      if (ok) {
+        old.correct++;
+        old.level = Math.min(5, old.level + 1);
+        old.nextAt = Date.now() + [1, 3, 7, 14, 30][Math.max(0, old.level - 1)] * 86400000;
+      } else {
+        old.wrong++;
+        old.level = Math.max(0, old.level - 1);
+        old.nextAt = Date.now() + 10 * 60000;
+      }
+
+      state.reviews[id] = old;
+    }
+
+    function answerLetter(id) {
+      if (!letterQuiz || letterQuiz.chosen) return;
+
+      letterQuiz.chosen = id;
+      const ok = id === letterQuiz.answer.id;
+
+      state.stats.answered++;
+      if (ok) {
+        state.stats.correct++;
+        letterQuiz.feedback = "对了。这个字母暂时没有骗到你。";
+      } else {
+        letterQuiz.feedback = `错了。${letterQuiz.answer.letter} 的读音是 ${letterQuiz.answer.sound}`;
+        addMistake(letterQuiz.answer.id, "字母", "字母读音选择错误");
+      }
+
+      saveState();
+      render();
+    }
+
+    async function playScenario(id) {
+      const s = DATA.scenarios.find(x => x.id === id);
+      if (!s) return;
+
+      for (const [ru] of s.lines) {
+        await new Promise(resolve => {
+          if (!window.speechSynthesis) return resolve();
+          speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(ru);
+          u.lang = "ru-RU";
+          u.rate = Number(state.settings.rate) || 0.9;
+
+          const voices = getVoices();
+          const selected = voices.find(v => v.voiceURI === state.settings.voiceURI);
+          const ruVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("ru"));
+          u.voice = selected || ruVoice || null;
+
+          u.onend = () => setTimeout(resolve, 350);
+          speechSynthesis.speak(u);
+        });
+      }
+
+      state.stats.played += s.lines.length;
+      saveState();
+    }
+
+    document.addEventListener("click", async e => {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+
+      if (action === "view") setView(btn.dataset.view);
+
+      if (action === "speak") {
+        await speak(dec(btn.dataset.text), Number(btn.dataset.rate || state.settings.rate));
+      }
+
+      if (action === "record") {
+        if (mediaRecorder && mediaRecorder.state === "recording") {
+          stopRecording();
+        } else {
+          startRecording(btn.dataset.id);
+        }
+      }
+
+      if (action === "mark") {
+        markCard(btn.dataset.id, btn.dataset.rating);
+      }
+
+      if (action === "new-listen-quiz") {
+        makeListenQuiz();
+        render();
+      }
+
+      if (action === "answer-listening") {
+        answerListening(btn.dataset.id);
+      }
+
+      if (action === "new-letter-quiz") {
+        makeLetterQuiz();
+        render();
+      }
+
+      if (action === "answer-letter") {
+        answerLetter(btn.dataset.id);
+      }
+
+      if (action === "play-scenario") {
+        playScenario(btn.dataset.id);
+      }
+
+      if (action === "clear-mistakes") {
+        if (confirm("确定清空错题？错题会哭，但你可能不会。")) {
+          state.mistakes = [];
+          saveState();
+          render();
+        }
+      }
+
+      if (action === "export-progress") {
+        const box = $("#exportBox");
+        if (box) box.value = JSON.stringify(state, null, 2);
+      }
+
+      if (action === "import-progress") {
+        const box = $("#importBox");
+        try {
+          const imported = JSON.parse(box.value);
+          state = { ...defaultState(), ...imported };
+          saveState();
+          alert("导入成功。你的学习债务回来了。");
+          render();
+        } catch {
+          alert("导入失败。JSON 不对，像很多人生计划一样。");
+        }
+      }
+
+      if (action === "test-voice") {
+        speak("Я хочу говорить по-русски.", state.settings.rate);
+      }
+
+      if (action === "save-settings") {
+        const rateInput = $("#rateInput");
+        const voiceSelect = $("#voiceSelect");
+        if (rateInput) state.settings.rate = Number(rateInput.value);
+        if (voiceSelect) state.settings.voiceURI = voiceSelect.value;
+        saveState();
+        alert("设置已保存。伟大，按钮被按下了。");
+        render();
+      }
+
+      if (action === "reset-state") {
+        if (confirm("确定清空所有数据？这不是撤销键能拯救的小事故。")) {
+          localStorage.removeItem("rusmouth_state");
+          state = defaultState();
+          initDaily();
+          render();
+        }
+      }
+    });
+
+    document.addEventListener("input", e => {
+      if (e.target.id === "rateInput") {
+        const value = e.target.value;
+        const out = $("#rateValue");
+        if (out) out.textContent = value;
+      }
+    });
+
+    if ("speechSynthesis" in window) {
+      speechSynthesis.onvoiceschanged = populateVoices;
+    }
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+
+    initDaily();
+    render();
+  </script>
+</body>
+</html>

@@ -348,7 +348,7 @@
   <main id="app"></main>
 
   <script>
-    const APP_VERSION = "0.1.2";
+    const APP_VERSION = "0.1.3";
 
     const DATA = {
       letters: [
@@ -719,7 +719,86 @@
       return DATA.phrases.find(p => p.id === id);
     }
 
+    /* TRAINING_AUDIO_START */
+    const TRAINING_AUDIO = {
+      "А": "audio/training001.mp3",
+      "Б": "audio/training002.mp3",
+      "В": "audio/training003.mp3",
+      "Г": "audio/training004.mp3",
+      "Д": "audio/training005.mp3",
+      "Е": "audio/training006.mp3",
+      "Ё": "audio/training007.mp3",
+      "Ж": "audio/training008.mp3",
+      "З": "audio/training009.mp3",
+      "И": "audio/training010.mp3",
+      "Й": "audio/training011.mp3",
+      "К": "audio/training012.mp3",
+      "Л": "audio/training013.mp3",
+      "М": "audio/training014.mp3",
+      "Н": "audio/training015.mp3",
+      "О": "audio/training016.mp3",
+      "П": "audio/training017.mp3",
+      "Р": "audio/training018.mp3",
+      "С": "audio/training019.mp3",
+      "Т": "audio/training020.mp3",
+      "У": "audio/training021.mp3",
+      "Ф": "audio/training022.mp3",
+      "Х": "audio/training023.mp3",
+      "Ц": "audio/training024.mp3",
+      "Ч": "audio/training025.mp3",
+      "Ш": "audio/training026.mp3",
+      "Щ": "audio/training027.mp3",
+      "Ъ": "audio/training028.mp3",
+      "Ы": "audio/training029.mp3",
+      "Ь": "audio/training030.mp3",
+      "Э": "audio/training031.mp3",
+      "Ю": "audio/training032.mp3",
+      "Я": "audio/training033.mp3",
+      "мама": "audio/training034.mp3",
+      "банк": "audio/training035.mp3",
+      "вода": "audio/training036.mp3",
+      "город": "audio/training037.mp3",
+      "дом": "audio/training038.mp3",
+      "нет": "audio/training039.mp3",
+      "ёлка": "audio/training040.mp3",
+      "журнал": "audio/training041.mp3",
+      "зуб": "audio/training042.mp3",
+      "имя": "audio/training043.mp3",
+      "мой": "audio/training044.mp3",
+      "кофе": "audio/training045.mp3",
+      "лампа": "audio/training046.mp3",
+      "он": "audio/training047.mp3",
+      "папа": "audio/training048.mp3",
+      "рука": "audio/training049.mp3",
+      "сок": "audio/training050.mp3",
+      "ты": "audio/training051.mp3",
+      "утро": "audio/training052.mp3",
+      "фото": "audio/training053.mp3",
+      "хочу": "audio/training054.mp3",
+      "центр": "audio/training055.mp3",
+      "чай": "audio/training056.mp3",
+      "школа": "audio/training057.mp3",
+      "щи": "audio/training058.mp3",
+      "объект": "audio/training059.mp3",
+      "день": "audio/training060.mp3",
+      "это": "audio/training061.mp3",
+      "юг": "audio/training062.mp3",
+      "я": "audio/training063.mp3",
+      "хорошо": "audio/training064.mp3",
+      "хлеб": "audio/training065.mp3",
+      "мы": "audio/training066.mp3",
+      "сыр": "audio/training067.mp3",
+      "Россия": "audio/training068.mp3",
+      "говорю": "audio/training069.mp3",
+      "уже": "audio/training070.mp3",
+      "жизнь": "audio/training071.mp3",
+      "мать": "audio/training072.mp3",
+      "говорить": "audio/training073.mp3"
+};
+    /* TRAINING_AUDIO_END */
+
     function getAudioUrl(text) {
+      if (TRAINING_AUDIO[text]) return TRAINING_AUDIO[text];
       const phrase = DATA.phrases.find(p => p.ru === text);
       if (phrase && phrase.audio) return phrase.audio;
       if (EXTRA_AUDIO[text]) return EXTRA_AUDIO[text];
